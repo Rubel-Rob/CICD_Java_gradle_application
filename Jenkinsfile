@@ -1,7 +1,7 @@
 pipeline{
     agent any
     stages{
-        stage("sonar qaulity check"){
+        stage("sonar qaulity check") {
             agent {
                 docker{
                     image 'openjdk-11'
@@ -9,7 +9,7 @@ pipeline{
             }
         }
           steps{
-            script{
+            script {
                 withSonarQubeEnv(credentialsId: 'sonar-token') {
                         sh 'chmod +x gradlew'
                         sh './gradlew sonarqube'
