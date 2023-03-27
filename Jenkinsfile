@@ -10,11 +10,10 @@ pipeline{
                     withSonarQubeEnv(credentialsId: 'sonar-token-1') {
                         sh "chmod +x gradlew"
                         sh "./gradlew sonarqube"
-        stage("quality gate")
-            steps{
-                timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-            }
+                    timeout(time: 5, unit: 'MINUTES') {
+                      def qg = waitForQualityGate()
+                      if (qg.status != 'OK') {
+                           error "Pipeline aborted due to quality gate failure: ${qg.status}"
                     }
                 }
             }
@@ -24,3 +23,4 @@ pipeline{
  
 }
 
+}
