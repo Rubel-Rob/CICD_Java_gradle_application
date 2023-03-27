@@ -23,7 +23,7 @@ pipeline{
         }
 
     }
-        stage("docker build and docker push")
+        stage ("docker build and docker push")
            steps {
                withCredentials([string(credentialsId: 'docker_pass', variable: 'docker_pass')]) {
                            sh '''
@@ -34,7 +34,8 @@ pipeline{
 
 
                               '''        
-                           }
-                        }
+               }
+            
                 
-                    }
+             }
+}                   
