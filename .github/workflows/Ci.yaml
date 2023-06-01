@@ -4,6 +4,10 @@ name: Java CI with Gradle
 on:
   pull_request:
     branches: [ "main" ]
+    
+env:
+  DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }} 
+
 
 jobs:
   build:
