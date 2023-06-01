@@ -44,5 +44,8 @@ jobs:
     - name: Install Datree
       run: curl https://get.datree.io | /bin/bash
       
+    - name: check the version
+      run: datree --version
+      
     - name: Run Datree Policy Check
       run: datree test kube.yaml
