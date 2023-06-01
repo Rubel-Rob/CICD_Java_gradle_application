@@ -48,4 +48,4 @@ jobs:
       run: datree version
       
     - name: Run Datree Policy Check
-      run: datree test kube.yaml
+      run: datree test */kube.yaml
