@@ -48,4 +48,9 @@ jobs:
       run: datree version
       
     - name: Run Datree Policy Check
-      run: datree test */kube.yaml
+      uses: datreeio/action-datree@v1
+      with:
+       version: '1.4.0'
+       path: '**/*.yaml'
+       cliArguments: '--only-k8s-files'
+
