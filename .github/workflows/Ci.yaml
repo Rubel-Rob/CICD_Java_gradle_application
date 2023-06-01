@@ -48,9 +48,8 @@ jobs:
       run: datree version
       
     - name: Run Datree Policy Check
-      uses: datreeio/action-datree@v1
+      uses: datreeio/action-datree@main
       with:
-       version: '1.4.0'
-       path: '**/*.yaml'
-       cliArguments: '--only-k8s-files'
-
+          version: '1.4.0'
+          path: '**/*.yaml'
+          cliArguments: '--only-k8s-files'
