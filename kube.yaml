@@ -47,7 +47,7 @@ spec:
         - name: registry-secret
       containers:
         - name: myapp
-          image: nginx:1:0
+          image: nginx:1.0
           command:
             - /bin/sh
           args:
