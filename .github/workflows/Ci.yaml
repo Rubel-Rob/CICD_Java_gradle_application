@@ -4,6 +4,10 @@ name: Java CI with Gradle
 on:
   pull_request:
     branches: [ "main" ]
+    
+env:
+  DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }} 
+
 
 jobs:
   build:
@@ -40,5 +44,11 @@ jobs:
     - name: Install Datree
       run: curl https://get.datree.io | /bin/bash
       
+    - name: check the version
+      run: datree version
+      
     - name: Run Datree Policy Check
-      run: datree test kube.yaml
+      uses: datreeio/action-datree@main
+      with:
+          path: '**/*.yaml'
+          cliArguments: '--only-k8s-files'
