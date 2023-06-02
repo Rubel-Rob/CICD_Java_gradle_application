@@ -1,5 +1,4 @@
 ---
-# this is k8s file
 apiVersion: v1
 kind: Service
 metadata:
@@ -47,7 +46,7 @@ spec:
         - name: registry-secret
       containers:
         - name: myapp
-          image: nginx:1.0
+          image: nginx:1:0
           command: ["/bin/sh"]
           args: ["-c","sh /usr/local/tomcat/bin/startup.sh;while true; do echo hello; sleep 10;done"]
           imagePullPolicy: IfNotPresent
