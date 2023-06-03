@@ -5,8 +5,6 @@ name: Java CI with Gradle-2
 on:
   pull_request:
     branches: [ "main" ]
-env:
-  DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }} 
 
 jobs:
   build:
@@ -40,16 +38,4 @@ jobs:
       timeout-minutes: 5
       env:
        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-       
-       
-    - name: Install Datree
-      run: curl https://get.datree.io | /bin/bash
-      
-    - name: check Datree version
-      run: datree version
-    - name: Run Datree Policy Check
-      uses: datreeio/action-datree@main
-      with:
-       path: '**/*.yaml'
-       cliArguments: '--only-k8s-files'
-      
+     
