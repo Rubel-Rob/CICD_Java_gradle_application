@@ -58,7 +58,7 @@ jobs:
        
     - name: deploying manifest file on k8s
       run: |
-        sed -i "s,nginx:1.0;40.80.85.236:8083/javaapp:${{ github.run_number }},g" deployment.yaml
+        sed -i "s;nginx:1.0;40.80.85.236:8083/javaapp:${{ github.run_number }};g" deployment.yaml
         kubectl apply -f
         sleep 30
         kubect get pods
