@@ -61,5 +61,5 @@ jobs:
         sed -i "s;nginx:1.0;40.80.85.236:8083/javaapp:${{ github.run_number }};g" deployment.yaml
         kubectl apply -f deployment.yaml
         sleep 30
-        kubect get pods
+        kubectl get pods
      
