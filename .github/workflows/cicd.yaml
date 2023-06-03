@@ -40,11 +40,17 @@ jobs:
        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
        
        
-    - name: Login to Docker Hub
+    - name: Login to Nexus Registry
       uses: docker/login-action@v2
       with: 
         registry: 40.80.85.236:8083
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }} 
+        
+    - name:  docker build and push 
+      run: |
+       docker build -t 40.80.85.236:8083/javaapp:${{ github.run_number }} .
+       docker push 40.80.85.236:8083/javaapp:${{ github.run_number }}
+       docker rmi 40.80.85.236:8083/javaapp:${{ github.run_number }}
    
      
