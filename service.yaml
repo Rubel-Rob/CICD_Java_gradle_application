@@ -8,3 +8,13 @@ metadata:
     app.kubernetes.io/instance: myapp
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: myapp
+    app.kubernetes.io/instance: myapp
