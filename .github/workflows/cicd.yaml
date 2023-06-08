@@ -56,29 +56,25 @@ jobs:
        docker build -t ${{ env.ACR_REGISTRY }}/javaapp:${{ github.run_number }} .
        docker push ${{ env.ACR_REGISTRY }}/javaapp:${{ github.run_number }}
        docker rmi ${{ env.ACR_REGISTRY }}/javaapp:${{ github.run_number }}
-     
-    
        
-      
-    - name: Az CLI login
-       permissions:
-           id-token: write
-           contents: read
+    - name: az cli login
       uses: azure/login@v1
       with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          
-  
-    - name: Azure CLI script
+    - name: Az cli login 
       uses: azure/CLI@v1
+          permissions:
+               id-token: write         
+               contents: read
       with:
           azcliversion: latest
           inlineScript: |
             az account show
             az group list
-
+         
+   
     - uses: azure/aks-set-context@v3
       with:
        resource-group: 'hd-insight-poc'
