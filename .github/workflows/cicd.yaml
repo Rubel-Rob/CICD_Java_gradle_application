@@ -1,18 +1,18 @@
 
 
-name: Java CI with Gradle-2
+name: Java CI with Gradle-2-on-AKS
 
 on:
   push:
     branches: [ "main" ]
 env:
- KUBECONFIG: /home/cloudadmin/config
+ ACR_REGISTRY: devopspractice12
 
 
 jobs:
   build:
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -43,23 +43,17 @@ jobs:
        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
        
        
-    - name: Login to Nexus Registry
+    - name: Login to ACR Registry
       uses: docker/login-action@v2
       with: 
-        registry: 40.80.85.236:8083
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }} 
+        registry: ${{ env.ACR_REGISTRY }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }} 
         
     - name:  docker build and push 
       run: |
-       docker build -t 40.80.85.236:8083/javaapp:${{ github.run_number }} .
-       docker push 40.80.85.236:8083/javaapp:${{ github.run_number }}
-       docker rmi 40.80.85.236:8083/javaapp:${{ github.run_number }}
+       docker build -t ${{ env.ACR_REGISTRY }}/javaapp:${{ github.run_number }} .
+       docker push ${{ env.ACR_REGISTRY }}/javaapp:${{ github.run_number }}
+       docker rmi ${{ env.ACR_REGISTRY }}/javaapp:${{ github.run_number }}
        
-    - name: deploying manifest file on k8s
-      run: |
-        sed -i "s;nginx:1.0;40.80.85.236:8083/javaapp:${{ github.run_number }};g" deployment.yaml
-        kubectl apply -f deployment.yaml
-        sleep 30
-        kubectl get pods
-     
+    
