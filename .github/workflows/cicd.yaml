@@ -5,6 +5,9 @@ name: Java CI with Gradle-2-on-AKS
 on:
   push:
     branches: [ "main" ]
+permissions:
+      id-token: write
+      contents: read   
 env:
  ACR_REGISTRY: devopspractice12.azurecr.io
 
@@ -65,9 +68,6 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - name: Az cli login 
       uses: azure/CLI@v1
-          permissions:
-               id-token: write         
-               contents: read
       with:
           azcliversion: latest
           inlineScript: |
