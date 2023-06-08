@@ -57,4 +57,34 @@ jobs:
        docker push ${{ env.ACR_REGISTRY }}/javaapp:${{ github.run_number }}
        docker rmi ${{ env.ACR_REGISTRY }}/javaapp:${{ github.run_number }}
        
+    - uses: azure/login@v1
+      with:
+       creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - uses: azure/aks-set-context@v3
+      with:
+       resource-group: 'hd-insight-poc'
+       cluster-name: 'CICD-java-gradle-app'
+       
+    - name: Set imagePullSecret
+      uses: azure/k8s-create-secret@v4
+      with: 
+        namespace: 'my-java-app'
+        secret-name: 'aks-acr-pull-image-secret'
+        container-registry-url: ${{ env.ACR_REGISTRY }}
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+      id: create-secret
+   
+    - uses: Azure/k8s-deploy@v4
+      with:
+       namespace: 'my-java-app'
+       manifests: |
+        deployment.yaml
+        service.yaml
+       images: ${{ env.ACR_REGISTRY }}/javaapp:${{ github.run_number }}
+       imagepullsecrets: |
+         aks-acr-pull-image-secret
+      
+       
     
